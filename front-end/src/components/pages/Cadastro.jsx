@@ -1,33 +1,36 @@
 import React from "react";
 import AppNavbar from "../organisms/AppNavbar"
 import Footer from "../organisms/Footer";
+import axios from 'axios'
+import { useState } from 'react';
 
 import Logo from "../../imgs/Logo ProStyle/09.jpeg"
 
 export default function Cadastro() {
-// // Adicionando um event listener de submit no formulário
-// const registerForm = document.getElementById('register-form');
-// registerForm.addEventListener('submit', async (event) => {
-//   event.preventDefault(); // evita o comportamento padrão de submit
+   const [emailInput, setEmailInput] = useState('')
+   const [senhaInput, setPasswordInput] = useState('')
+   const [nomeInput, setNomeInput] = useState('')
+   const [loading, setLoading] = useState(false)
+ 
+   const handleEmailInputChange = (event) => setEmailInput(event.target.value)
+   const handlePasswordInputChange = (event) => setPasswordInput(event.target.value)
+   const handleNomeInputChange = (event) => setNomeInput(event.target.value)
+   
 
-//   // Obtendo o valor dos campos de entrada
-//   const username = document.getElementById('username').value;
-//   const password = document.getElementById('password').value;
-
-//   // Criando um objeto JSON com as informações do usuário
-//   const userData = {
-//     username: username,
-//     password: password
-//   };
-
-//   // Enviando as informações para o back-end usando o método fetch()
-//   try {
-//     const response = await fetch('/register', {
-//       method: 'POST',
-//       headers: { 'Content-Type': 'application/json' },
-//       body: JSON.stringify(userData)
-//     });
-
+const handleSignUpClick = () => {
+   setLoading(true)
+   axios.post('http://localhost:8000/user/cadastro',
+     {
+       email: emailInput,
+       senha: senhaInput,
+       nome: nomeInput,
+     })
+    
+     .then(({ data }) => {
+       console.log(data)
+      
+     })
+ };
 //     if (response.ok) {
 //       alert('Cadastro realizado com sucesso!');
 //     } else {
@@ -51,14 +54,14 @@ export default function Cadastro() {
             <span className="">Faça o cadastro para ficar por dentro de tudo e comprar com mais agilidade nas proximas vezes!</span>
             <span>Nome de usuário</span>
             <form id="register-form">
-            <input type="text" id="username" placeholder="escreva seu nome de usuário" className="form-control" />
+            <input value={nomeInput} onChange={handleNomeInputChange} type="text" id="username" placeholder="escreva seu nome de usuário" className="form-control" />
             <span>Senha de usuário</span>
-            <input type="password" id="password"  placeholder="escreva sua senha" className="form-control"  />
+            <input value={senhaInput} onChange={handlePasswordInputChange} type="password" id="password"  placeholder="escreva sua senha" className="form-control"  />
             <span>Confirme a sua Senha</span>
-            </form>
             <input type="password" placeholder="escreva sua senha" className="form-control" />
             <span>Email</span>
-            <input type="email" placeholder="email" className="form-control" />
+            <input value={emailInput} onChange={handleEmailInputChange} type="email" placeholder="email" className="form-control" />
+            </form>
             <span>Cep</span>
             <input type="text" placeholder="Escreva seu CEP" className="form-control" />
             <span>Cidade</span>
@@ -69,6 +72,7 @@ export default function Cadastro() {
             <input type="text" placeholder="Nome de seu endereço" id="txtEndereco" className="form-control"/>
             <span>Número Residencial</span>
             <input type="text" placeholder="Número de sua residência" className="form-control"/>
+            <button onClick={handleSignUpClick}>Cadastre-se</button>
         </div>
      </div>
         <Footer />

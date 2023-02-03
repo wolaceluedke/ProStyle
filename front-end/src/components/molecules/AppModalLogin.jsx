@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState } from 'react';
+import axios from 'axios'
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -21,44 +22,36 @@ const style = {
 
 
 
-export default function BasicModal() {
-  
+const LoginForm = () => {
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
-  // function LoginPage() {
-  //   const [username, setUsername] = useState('');
-  //   const [password, setPassword] = useState('');
-  //   const [errorMessage, setErrorMessage] = useState ('');
-  // }
   
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
+  const [emailInput, setEmailInput] = useState('')
+  const [senhaInput, setPasswordInput] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  //   const data = { username, password };
+  const handleUserInputChange = (event) => setEmailInput(event.target.value)
+  const handlePasswordInputChange = (event) => setPasswordInput(event.target.value)
+  const handleLoginClick = () => {
+    setLoading(true)
+    axios.post('postgres://rltkvpkd:4bJqfKmrG5mcBsU-jm4iaPRw_7-8zBpA@babar.db.elephantsql.com/rltkvpkd',
+      {
+        email: emailInput,
+        password: senhaInput,
+      })
+      
+      .then(({ data }) => {
+        if (data.token) {
+          localStorage.setItem('token', data.token)
+          window.location.reload()
+        }
+        setLoading(false)
+      })
+  }
+  //useState para verificar se ta logado ou não 
 
-  //   try {
-  //     const response = await fetch('https://seu-backend.com/login', {
-  //       method: 'POST',
-  //       body: JSON.stringify(data),
-  //       headers: { 'Content-Type': 'application/json' },
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error(response.statusText);
-  //     }
-
-  //     const { token } = await response.json();
-
-  //     localStorage.setItem('token', token);
-  //     window.location.href = '/protected';
-  //   } catch (error) {
-  //     setErrorMessage(error.message);
-  //   }
-  // };
-  
-  
   return (
     <div>
       <div className="enter-button border-radius">
@@ -94,8 +87,8 @@ export default function BasicModal() {
               <div className="form-floating mb-3">
                 <input
                   type="text"
-                  // value={username}
-                  // onChange={(e) => setUsername(e.target.value)}
+                  value={emailInput}
+                  onChange={handleUserInputChange}
                   className="form-control rounded-3"
                   placeholder="name@example.com"
                 />
@@ -106,18 +99,18 @@ export default function BasicModal() {
                   type="password"
                   className="form-control rounded-3"
                   placeholder="Senha"
-                  // value={password}
-                  // onChange={(e) => setPassword(e.target.value)}
+                  value={senhaInput}
+                  onChange={handlePasswordInputChange}
                 />
                 <label htmlFor="floatingPassword">Senha</label>
               </div>
               <button
                 className="w-100 mb-2 btn btn-lg rounded-3 btn-primary"
                 type="submit"
+                onClick={handleLoginClick}
               >
                 ENTRAR
               </button>
-              {/* {errorMessage && <p>{errorMessage}</p>} */}
               <small className="text-muted">
                 Ao clicar em ENTRAR estará aceitando os Termos de uso.
               </small>
@@ -129,3 +122,5 @@ export default function BasicModal() {
     </div>
   )
 };
+
+export default LoginForm

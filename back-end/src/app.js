@@ -16,8 +16,8 @@ const userRoutes = require("./routes/Routes"); // importa as rotas do arquivo Us
 
 app.use("/user", userRoutes); // utiliza as rotas importadas com o prefixo '/user'
 
-app.listen(3000, () => {
-  console.log("Server running on port 3000");
+app.listen(8000, () => {
+  console.log("Server running on port 8000");
 });
 
 module.exports = app;

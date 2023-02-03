@@ -37,7 +37,7 @@ export default function OffcanvasExample() {
               <Offcanvas.Body>
                 <Nav className="justify-content flex-grow-1 pe-3">
                   <NavDropdown
-                    class=""
+
                     title="Roupas Masculinas"
                     id={`offcanvasNavbarDropdown-expand-${expand}`}
                   >
