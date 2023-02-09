@@ -49,6 +49,7 @@
 
 .text-color-titles {
     color: white;
+    text-decoration: none;
 }
 
 .background-white {
@@ -143,6 +144,12 @@
     float: left;
 }
 
+/* NAVBAR */
+
+.navbar {
+    background-color: #25020f;
+}
+
 .logo-nav {
     height: 4rem;
     width: 10rem;
@@ -150,6 +157,15 @@
     border-top-right-radius: 30px;
     margin-right: 5rem;
 }
+
+a {
+    text-decoration: none;
+    background-color: transparent;
+    color: white;
+}
+
+/* NAVBAR */
+
 
 .add-cart {
     border: #00B1FF solid 1px;
@@ -184,12 +200,11 @@
 /* FOOOTER                                                          */
 
 .FooterStyle {
+    background-color: #25020f;
     display: flex;
     justify-content: space-between;
     width: 100%;
     height: 200px;
-    background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity));
-    --bs-bg-opacity: 1;
     padding-top: 15px;
     color: white;
 

@@ -6,6 +6,36 @@ const { createProcedures } = require("../config/procedures");
 const login = (req, res) => {
   const email = req.body.email;
   const senha = req.body.senha;
+  const jwt = require('jsonwebtoken');
+
+//   pgClient.query(
+//     "SELECT usp_SelectLoginUsuario($1, $2)",
+//     [email, senha],
+//     (err, result) => {
+//       if (err) {
+//         res.status(400).send(err);
+//       } else {
+//         if (result.rows[0].usp_selectloginusuario) {
+//           const payload = {
+//             email: email
+//           };
+//           const options = {
+//             expiresIn: '1d'
+//           };
+//           const secret = process.env.JWT_SECRET;
+//           const token = jwt.sign(payload, secret, options);
+//           console.log(token); // adicione essa linha para verificar o valor do token
+//           res.status(200).json({
+//             message: 'Login realizado com sucesso!',
+//             token: token
+//           });
+//         } else {
+//           res.status(401).send("E-mail ou senha incorretos.");
+//         }
+//       }
+//     }
+//   );
+// };
 
   pgClient.query(
     "SELECT usp_SelectLoginUsuario($1, $2)",

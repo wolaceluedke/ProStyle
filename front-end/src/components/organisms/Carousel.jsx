@@ -1,8 +1,8 @@
 import React from "react"
 import Carousel from 'react-bootstrap/Carousel';
-import ImagemStreetWear from '../../imgs/Imagem-streetwear-nacional.png';
 import ImagemElementFeminina from '../../imgs/Coleçãinvernofeminino.png';
 import ImagemCarrouselElement from '../../imgs/Carrousel Element.png';
+import ElementCarousel from "../../imgs/Skaterboardcarousel.png"
 
 
 function CarouselHome() {
@@ -11,7 +11,7 @@ function CarouselHome() {
       <Carousel.Item>
         <img
           className="d-block w-100 img-carousel"
-          src={ImagemStreetWear}
+          src={ElementCarousel}
           alt="First slide"
         />
       </Carousel.Item>

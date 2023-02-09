@@ -1,3 +1,6 @@
+
+import React,{ useState } from 'react';
+
 import AppModalLogin from "../molecules/AppModalLogin";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
@@ -8,16 +11,26 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import Logo from "../../imgs/Logo ProStyle/Logo-NAV.jpeg";
 import ButtonSignUp from "../atoms/AppCadastro.jsx";
 
+
+
 export default function OffcanvasExample() {
+  const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem('token'))
+  const [username, setUsername] = useState('')
+  
+
+  const handleLogoutClick = () => {
+    localStorage.removeItem('token')
+    setUsername('')
+    setLoggedIn(false)
+  }
   return (
     <>
       {["lg"].map((expand) => (
         <Navbar
           key={expand}
-          bg="dark"
           variant="dark"
           expand={expand}
-          className="mb-3 background-black"
+          className="background-black navbar"
         >
           <Container>
             <Navbar.Brand href="/">
@@ -39,7 +52,6 @@ export default function OffcanvasExample() {
                   <NavDropdown
 
                     title="Roupas Masculinas"
-                    id={`offcanvasNavbarDropdown-expand-${expand}`}
                   >
                     <NavDropdown.Item href="#action3">Camisas</NavDropdown.Item>
                     <NavDropdown.Item href="#action4">
@@ -49,8 +61,19 @@ export default function OffcanvasExample() {
                   </NavDropdown>
                 </Nav>
                 <Form className="d-flex">
-                  <AppModalLogin />
+                <div>
+                {loggedIn ? (
+                 <>
+                   <p>Bem-vindo, {username}</p>
+                   <button onClick={handleLogoutClick}>Sair</button>
+                 </>
+              ) : (
+                 <>
+                 <AppModalLogin />
                   <ButtonSignUp />
+                </>
+                 )}
+                 </div>
                 </Form>
               </Offcanvas.Body>
             </Navbar.Offcanvas>

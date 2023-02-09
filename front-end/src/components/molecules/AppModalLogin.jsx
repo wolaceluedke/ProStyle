@@ -31,26 +31,39 @@ const LoginForm = () => {
   const [emailInput, setEmailInput] = useState('')
   const [senhaInput, setPasswordInput] = useState('')
   const [loading, setLoading] = useState(false)
+  const [username, setUsername] = useState('')
+  const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem('token'))
 
+  
+  
   const handleUserInputChange = (event) => setEmailInput(event.target.value)
   const handlePasswordInputChange = (event) => setPasswordInput(event.target.value)
-  const handleLoginClick = () => {
+  const handleLoginClick = (event) => {
     setLoading(true)
-    axios.post('postgres://rltkvpkd:4bJqfKmrG5mcBsU-jm4iaPRw_7-8zBpA@babar.db.elephantsql.com/rltkvpkd',
-      {
-        email: emailInput,
-        password: senhaInput,
-      })
-      
-      .then(({ data }) => {
-        if (data.token) {
-          localStorage.setItem('token', data.token)
-          window.location.reload()
-        }
-        setLoading(false)
-      })
+    axios.post('http://localhost:8000/user/login',
+  {
+    email: emailInput,
+    senha: senhaInput,
+  })
+  .then(({ data }) => {
+    console.log(data)
+    if (data.token) {
+      localStorage.setItem('token', data.token)
+      setUsername(data.username)
+      setLoggedIn(true)
+    }
+    setLoading(false)
+  })
+  .catch(error => {
+    console.error(error)
+    setLoading(false)
+  })
   }
-  //useState para verificar se ta logado ou não 
+  
+  
+
+
+  // useState para verificar se ta logado ou não 
 
   return (
     <div>
@@ -70,9 +83,9 @@ const LoginForm = () => {
       >
         <Box sx={style} className="border-radius">
           <div className="X">
-            <Button variant="outline-dark" onClick={handleClose}>
-              <CloseButton />
-            </Button>
+            <button variant="outline-dark" onClick={handleClose}>
+            X
+            </button>
           </div>
           <h1
             id="modal-modal-title"

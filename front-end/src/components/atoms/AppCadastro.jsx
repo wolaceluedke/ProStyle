@@ -4,9 +4,9 @@ import { Link } from "react-router-dom"
 
 function ButtonSignUp() {
   return (
-    <div className="cadastro-button">
-      <Button variant="contained">
-      <Link to="/cadastro" size="small">Cadastre-se </Link>
+    <div className="enter-button border-radius">
+      <Button variant="contained" className="buttonCadastro">
+      <Link to="/cadastro" size="small">Cadastro </Link>
       </Button>
     </div>
   );
